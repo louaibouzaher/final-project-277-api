@@ -1,1 +1,1 @@
-web: node api/index
+web: node index
