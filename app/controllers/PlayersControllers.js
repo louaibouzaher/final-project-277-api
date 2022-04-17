@@ -1,26 +1,26 @@
-// const Product = require("../models/ProductModel");
-
-exports.getAllProducts = async (req, res) => {
+// const Player = require("../models/PlayerModel");
+const db = require("../../db.config");
+exports.getAllPlayers = async (req, res) => {
   try {
-    const allProducts = await Product.find();
-    res.send(allProducts);
+    const allPlayers = await db.query("select * from players");
+    res.send(allPlayers);
   } catch (err) {
     console.log(err);
     res.sendStatus(500);
   }
 };
 
-exports.createProduct = async (req, res) => {
+exports.createPlayer = async (req, res) => {
   try {
-    const newProduct = Product({
+    const newPlayer = Player({
       name: req.body.name,
       color: req.body.color,
       price: req.body.price,
       image: req.body.image,
     });
-    await newProduct.save().then(() => {
+    await newPlayer.save().then(() => {
       res.json({
-        message: "Product Successfully Created",
+        message: "Player Successfully Created",
       });
     });
   } catch (err) {
@@ -29,16 +29,16 @@ exports.createProduct = async (req, res) => {
   }
 };
 
-exports.updateProduct = async (req, res) => {
+exports.updatePlayer = async (req, res) => {
   try {
-    const targetProduct = await Product.findByIdAndUpdate(req.params.id, {
+    const targetPlayer = await Player.findByIdAndUpdate(req.params.id, {
       name: req.body.name,
       color: req.body.color,
       price: req.body.price,
       image: req.body.image,
     });
     res.json({
-      message: "Product Updated Successfully",
+      message: "Player Updated Successfully",
     });
   } catch (err) {
     console.log(err);
@@ -46,15 +46,15 @@ exports.updateProduct = async (req, res) => {
   }
 };
 
-exports.deleteProduct = async (req, res) => {
+exports.deletePlayer = async (req, res) => {
   try {
-    const targetProduct = await Product.findByIdAndDelete(req.params.id);
-    if (!targetProduct) {
+    const targetPlayer = await Player.findByIdAndDelete(req.params.id);
+    if (!targetPlayer) {
       return res.sendStatus(404);
     }
     res.json({
-      targetProduct,
-      message: "Product Deleted Successfully",
+      targetPlayer,
+      message: "Player Deleted Successfully",
     });
   } catch (err) {
     console.log(err);
