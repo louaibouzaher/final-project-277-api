@@ -1,10 +1,13 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const fs = require("fs");
+var readline = require("readline");
 
 const app = express();
 
 const playersRoutes = require("./app/routes/PlayersRoutes");
+const teamsRoutes = require("./app/routes/TeamsRoutes");
 
 const db = require("./db.config");
 
@@ -16,8 +19,9 @@ db.query("SELECT 1 + 1 AS solution", function (error, results, fields) {
   if (error) throw error;
   console.log("The solution is: ", results[0].solution);
 });
+db.query("CREATE SCHEMA Football", function (error, results, fields) {});
 
-app.use(cors());
+app.use(cors({ origin: "*" }));
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
@@ -28,6 +32,9 @@ app.get("/", (req, res) => {
 });
 
 app.use("/players", playersRoutes);
+app.use("/teams", teamsRoutes);
+app.use("/coaches", playersRoutes);
+app.use("/leagues", playersRoutes);
 
 const PORT = process.env.PORT || 4321;
 app.listen(PORT, () => {
