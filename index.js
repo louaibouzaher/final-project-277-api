@@ -26,7 +26,7 @@ app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
   res.send(
-    `<h1> Welcome to CMPS 277 Final Project Football Database API</h1> \
+    `<h1>CMPS 277 Final Project Football Database API</h1> \
     For more info <a href=${githubRepoUrl} target='_blank'> Click Here </a>`
   );
 });
