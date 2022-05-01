@@ -8,6 +8,7 @@ const playersRoutes = require("./app/routes/PlayersRoutes");
 const teamsRoutes = require("./app/routes/TeamsRoutes");
 const coachesRoutes = require("./app/routes/CoachesRoutes");
 const leaguesRoutes = require("./app/routes/LeaguesRoutes");
+const refereesRoutes = require("./app/routes/RefereesRoutes");
 
 const db = require("./db.config");
 
@@ -35,6 +36,7 @@ app.use("/players", playersRoutes);
 app.use("/teams", teamsRoutes);
 app.use("/coaches", coachesRoutes);
 app.use("/leagues", leaguesRoutes);
+app.use("/referees", refereesRoutes);
 
 const PORT = process.env.PORT || 4321;
 app.listen(PORT, () => {
