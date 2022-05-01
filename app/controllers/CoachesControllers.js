@@ -1,8 +1,8 @@
-// const Player = require("../models/PlayerModel");
+// const coach = require("../models/coachModel");
 const db = require("../../db.config");
-exports.getAllPlayers = async (req, res) => {
+exports.getAllCoaches = async (req, res) => {
   try {
-    await db.query("select * from playersinteam ", (error, results, fields) => {
+    await db.query(`select * from all_coaches`, (error, results, fields) => {
       if (error) {
         console.log(error);
         res.send(error);
@@ -15,14 +15,14 @@ exports.getAllPlayers = async (req, res) => {
     res.send(err);
   }
 };
-exports.getFilteredPlayers = async (req, res) => {
+exports.getFilteredCoaches = async (req, res) => {
   try {
     const filters = Object.keys(req.body)
       .map((key) => `${key} = "${req.body[key]}"`)
       .join(" AND ");
     console.log(filters);
     const q =
-      `select * from playersinteam ` +
+      `select * from all_coaches ` +
       (filters.length > 1 ? `where ${filters}` : "");
     console.log(q);
     await db.query(q, (error, results, fields) => {
@@ -38,21 +38,14 @@ exports.getFilteredPlayers = async (req, res) => {
   }
 };
 
-exports.createPlayer = async (req, res) => {
+exports.createCoach = async (req, res) => {
   try {
-    const player = req.body;
-    console.log(player);
-    const q = `CALL addPlayer("${player.firstName}",
-    "${player.lastName}", 
-     "${player.picture}",
-      '${player.birthdate}',"${player.nationality}",
-        "${player.club}", 
-        "${player.nationTeam}",
-         ${player.shirtNumber},
-         "${player.position}", 
-          ${player.numberOfGoals},
-          ${player.numberOfTrophies},
-           ${player.numberOfAssists});`;
+    const coach = req.body;
+    const q = `CALL addCoach("${coach.firstName}",
+    "${coach.lastName}", 
+     "${coach.picture}",
+      '${coach.birthdate}',"${coach.nationality}",
+        "${coach.teamName}");`;
 
     await db.query(q, (error, results, fields) => {
       if (error) {
@@ -68,24 +61,19 @@ exports.createPlayer = async (req, res) => {
   }
 };
 
-exports.updatePlayer = async (req, res) => {
+exports.updateCoach = async (req, res) => {
   try {
-    const player = req.body;
-    console.log("player: " + JSON.stringify(player));
-    const q = `CALL editPlayer(${player.id},"${player.firstName}",
-    "${player.lastName}", 
-     "${player.picture}",
-      '${player.birthdate}',"${player.nationality}",
-        "${player.currentClub}", 
-        "${player.nationTeam}",
-         ${player.shirtNumber},
-         "${player.position}", 
-          ${player.numberOfGoals},
-          ${player.numberOfTrophies},
-           ${player.numberOfAssists});`;
+    const coach = req.body;
+    console.log("coach: " + JSON.stringify(coach));
+    const q = `CALL editCoach(${coach.people_Id},"${coach.firstName}",
+    "${coach.lastName}", 
+     "${coach.picture}",
+      '${coach.birthdate}',"${coach.nationality}",
+        "${coach.teamName}");`;
 
     await db.query(q, (error, results, fields) => {
       if (error) {
+        console.log(error);
         res.send(error);
         return;
       }
@@ -94,16 +82,17 @@ exports.updatePlayer = async (req, res) => {
     });
   } catch (err) {
     console.log(err);
-    res.send("Error");
+    res.sendStatus(500);
   }
 };
 
-exports.deletePlayer = async (req, res) => {
+exports.deleteCoach = async (req, res) => {
   try {
     await db.query(
       `delete from people where ID = ${req.params.id}`,
       (error, results, fields) => {
         if (error) {
+          console.log(error);
           res.send(error);
         }
         console.log(results);

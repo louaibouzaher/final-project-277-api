@@ -7,7 +7,7 @@ exports.getAllClubs = async (req, res) => {
         if (error) {
           res.send(error);
         }
-        console.log(results);
+
         res.send(results);
       }
     );
@@ -24,7 +24,7 @@ exports.getAllNationalTeams = async (req, res) => {
         if (error) {
           res.send(error);
         }
-        console.log(results);
+
         res.send(results);
       }
     );
@@ -55,7 +55,7 @@ exports.getFilteredClubs = async (req, res) => {
         res.send(error);
         return;
       }
-      console.log(results);
+
       res.send(results);
     });
   } catch (err) {
@@ -82,7 +82,7 @@ exports.getFilteredNationalTeams = async (req, res) => {
         res.send(error);
         return;
       }
-      console.log(results);
+
       res.send(results);
     });
   } catch (err) {
@@ -99,7 +99,7 @@ exports.createClub = async (req, res) => {
         res.send(error);
         return;
       }
-      console.log(results);
+
       res.send(results);
     });
   } catch (err) {
@@ -116,7 +116,7 @@ exports.createNationalTeam = async (req, res) => {
         res.send(error);
         return;
       }
-      console.log(results);
+
       res.send(results);
     });
   } catch (err) {
@@ -133,7 +133,7 @@ exports.updateTeam = async (req, res) => {
         res.send(error);
         return;
       }
-      console.log(results);
+
       res.send(results);
     });
   } catch (err) {
@@ -144,13 +144,16 @@ exports.updateTeam = async (req, res) => {
 
 exports.deleteTeam = async (req, res) => {
   try {
+    console.log(req.params.id);
     await db.query(
-      `delete from team where id=${req.params.id}`,
+      `delete from team where id = ${req.params.id}`,
       (error, results, fields) => {
         if (error) {
+          console.log(error);
           res.send(error);
+          return;
         }
-        console.log(results);
+
         res.send(results);
       }
     );

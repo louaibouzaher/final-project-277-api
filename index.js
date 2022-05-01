@@ -1,13 +1,12 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const fs = require("fs");
-var readline = require("readline");
 
 const app = express();
 
 const playersRoutes = require("./app/routes/PlayersRoutes");
 const teamsRoutes = require("./app/routes/TeamsRoutes");
+const coachesRoutes = require("./app/routes/CoachesRoutes");
 
 const db = require("./db.config");
 
@@ -33,7 +32,7 @@ app.get("/", (req, res) => {
 
 app.use("/players", playersRoutes);
 app.use("/teams", teamsRoutes);
-app.use("/coaches", playersRoutes);
+app.use("/coaches", coachesRoutes);
 app.use("/leagues", playersRoutes);
 
 const PORT = process.env.PORT || 4321;
