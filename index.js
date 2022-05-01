@@ -7,6 +7,7 @@ const app = express();
 const playersRoutes = require("./app/routes/PlayersRoutes");
 const teamsRoutes = require("./app/routes/TeamsRoutes");
 const coachesRoutes = require("./app/routes/CoachesRoutes");
+const leaguesRoutes = require("./app/routes/LeaguesRoutes");
 
 const db = require("./db.config");
 
@@ -33,7 +34,7 @@ app.get("/", (req, res) => {
 app.use("/players", playersRoutes);
 app.use("/teams", teamsRoutes);
 app.use("/coaches", coachesRoutes);
-app.use("/leagues", playersRoutes);
+app.use("/leagues", leaguesRoutes);
 
 const PORT = process.env.PORT || 4321;
 app.listen(PORT, () => {
